@@ -37,7 +37,7 @@ export const TopPage = () => {
                     <form onSubmit={submit}>
                         <label htmlFor="app_key">
                             app_key: 
-                            <input onChange={handleChange} id="app_key" type="texst" required/>
+                            <input onChange={handleChange} id="app_key" type="texs" required/>
                         </label>
                         <button type="submit">送信</button>
                     </form>

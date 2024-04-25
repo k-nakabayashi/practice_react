@@ -1,5 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import { TopPage } from '@/pages';
+import { TopPage, GraphPage } from '@/pages';
 import { errorRoutingConfig } from '@/routes/error';
 
 
@@ -12,7 +12,7 @@ export const AppRoutes = () => {
     },
     {
       path: "/graph",
-      element: <h2>testaa</h2>,
+      element: <GraphPage />,
     },
     ...errorRoutingConfig,
   ];

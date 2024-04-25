@@ -1,2 +1,2 @@
-// export * from '@/pages/graph';
 export *  from '@/pages/top';
+export * from '@/pages/graph';
