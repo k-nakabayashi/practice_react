@@ -3,7 +3,6 @@ import { BaseLayout } from '@/layout/BaseLayout'
 
 export const Error404 = () => {
 
-  console.log("asds")
   return (
     <BaseLayout title='error_404'>
       <div>

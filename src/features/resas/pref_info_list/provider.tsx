@@ -46,9 +46,9 @@ const isPrefInfoListResasResponseDto = function(obj: any): obj is PrefInfoListRe
         obj &&
         (typeof obj.message === 'string' || obj.message === null) &&
         Array.isArray(obj.result) &&
-        obj.result.every((prefecture: any) => (
-        typeof prefecture.prefCode === 'number' &&
-        typeof prefecture.prefName === 'string'
+        obj.result.every((data: any) => (
+        typeof data.prefCode === 'number' &&
+        typeof data.prefName === 'string'
         ))
     );
 }

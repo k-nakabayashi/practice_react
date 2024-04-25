@@ -12,7 +12,7 @@ import { isPrefInfoListResasResponseDto } from "@/features/resas/pref_info_list/
 export const getPrefInfoList = async (resas_api_key: string): Promise<PrefInfo[]>  => {
 
   const callbackFunction: callbackFunctionType  = async (resas_api_key: string): Promise<any> => {
-    var url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+    let url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
     return await axios.get(
         url, 
         {
@@ -29,6 +29,6 @@ export const getPrefInfoList = async (resas_api_key: string): Promise<PrefInfo[]
     }
     return false;
   }
-  return await executeResas(resas_api_key, callbackFunction, validation)
+  return await executeResas(resas_api_key, callbackFunction, validation);
 }
 
