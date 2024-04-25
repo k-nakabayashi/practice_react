@@ -8,13 +8,14 @@ import { executeResas, callbackFunctionType, validationType } from "@/features/r
 // ===================================
 // 人口の取得処理
 // ===================================
+export type PopulationInfoResult = {
+    boundaryYear: number | string
+    data: PopulationInfo[];
+}
 
-type PopulationInfoResasResponseDto = {
+export type PopulationInfoResasResponseDto = {
     message: string | null;
-    result: {
-        boundaryYear: number | string
-        data: PopulationInfo[];
-    }
+    result: PopulationInfoResult
 }
 
 const isPopulationInfoResasResponseDtoResponseDto = function(obj: any): obj is PopulationInfoResasResponseDto {

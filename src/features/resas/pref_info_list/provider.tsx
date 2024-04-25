@@ -6,15 +6,15 @@ import { PrefInfo } from "@/features/resas/common/dto";
 // ===================================
   
 export type PrefInfoListResasResponseDto = {
-    message: string | null;
-    result: PrefInfo[];
+  message: string | null;
+  result: PrefInfo[];
 }
 
 type PrefInfoListResasContextType = {
-    prefInfoList: PrefInfo[];
-    setPrefInfoList: (data: any) => void;
-    deletePrefInfoList: () => void;
-  };
+  prefInfoList: PrefInfo[];
+  setPrefInfoList: (data: any) => void;
+  deletePrefInfoList: () => void;
+};
 
 const PrefInfoListResasContext = createContext<PrefInfoListResasContextType>({
     prefInfoList: [],
