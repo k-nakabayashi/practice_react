@@ -14,7 +14,6 @@ export const TopPage = () => {
     const navigate = useNavigate();
 
     const {
-        app_key,
         handleChange,
     } = useContext(TopPageContext);
     
@@ -37,7 +36,7 @@ export const TopPage = () => {
                     <form onSubmit={submit}>
                         <label htmlFor="app_key">
                             app_key: 
-                            <input onChange={handleChange} id="app_key" type="texst" required/>
+                            <input onChange={handleChange} id="app_key" type="text" required/>
                         </label>
                         <button type="submit">送信</button>
                     </form>
