@@ -18,7 +18,7 @@ const TopPageProvider = ({ children }: TopPageProviderProps) => {
     // ==========================
     // 事前処理
     // ==========================
-    const [app_key, setAppKey] = useState('')
+    const [_, setAppKey] = useState('')
 
     const handleChange = (e: any) => {
       setAppKey(e.target.value)

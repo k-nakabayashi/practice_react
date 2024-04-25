@@ -13,7 +13,8 @@ export const TopPage = () => {
     const title = 'top';
     const navigate = useNavigate();
 
-    const { 
+    const {
+        app_key,
         handleChange,
     } = useContext(TopPageContext);
     
@@ -27,7 +28,6 @@ export const TopPage = () => {
         // 遷移する
         navigate("/graph");
     }
-
     return (
         <BaseLayout
             title={title}
@@ -37,7 +37,7 @@ export const TopPage = () => {
                     <form onSubmit={submit}>
                         <label htmlFor="app_key">
                             app_key: 
-                            <input onChange={handleChange} id="app_key" type="texs" required/>
+                            <input onChange={handleChange} id="app_key" type="texst" required/>
                         </label>
                         <button type="submit">送信</button>
                     </form>
