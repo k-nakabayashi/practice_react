@@ -6,7 +6,7 @@ export const GraphPage = () => {
     // 事前処理
     // ==========================
 
-    const title = 'グラフ';
+    const title = 'graph';
 
     // ==========================
     // コールバック
