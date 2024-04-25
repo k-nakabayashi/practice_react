@@ -23,6 +23,10 @@ export const TopPage = () => {
     
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        
+        // TODO: 都道府県一覧を取得する
+        // TODO: resasのapiキーをstateに設定する
+        // TODO: 都道府県情報をstateに設定する
 
         // 遷移する
         navigate("/graph");

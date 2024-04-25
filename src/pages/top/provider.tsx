@@ -18,10 +18,10 @@ const TopPageProvider = ({ children }: TopPageProviderProps) => {
     // ==========================
     // 事前処理
     // ==========================
-    const [_, setAppKey] = useState('')
+    const [_, setApiKey] = useState('')
 
     const handleChange = (e: any) => {
-      setAppKey(e.target.value)
+      setApiKey(e.target.value)
     }
 
     // ==========================

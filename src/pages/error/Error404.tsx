@@ -7,7 +7,7 @@ export const Error404 = () => {
   return (
     <BaseLayout title='error_404'>
       <div>
-        <h1>404 - Not Found</h1>
+        <h1>404 エラー発生</h1>
         <p>お探しのページが見つかりませんでした。</p>
       </div>
     </BaseLayout>
