@@ -18,7 +18,6 @@ export const GraphPage = () => {
     const api_key = local_storage.get(resas_api_key_name);
     const { prefInfoList, setPrefInfoList } = useContext(PrefInfoListResasContext)
 
-
     // ==========================
     // Hook
     // ==========================
@@ -75,7 +74,7 @@ export const GraphPage = () => {
             // =============
 
             const pref_code = String(checkedValues[i]);
-            let pref_info = prefInfoList[Number(pref_code)-1];
+            let pref_info = prefInfoListForChart.current[[Number(pref_code)-1]];
             target_pref_code_for_chart.push(pref_code);
             
             if (pref_info.hasOwnProperty("xAxis_year") && pref_info.xAxis_year !== null) {
@@ -101,7 +100,6 @@ export const GraphPage = () => {
             updatePrefInfoListForChart(Number(pref_code), xAxis_year, yAxis_total_population)
         }
 
-        console.log(prefInfoListForChart)
     }
 
     return (
