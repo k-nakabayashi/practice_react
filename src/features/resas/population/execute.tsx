@@ -18,6 +18,7 @@ export type PopulationInfoResasResponseDto = {
     result: PopulationInfoResult
 }
 
+
 const isPopulationInfoResasResponseDtoResponseDto = function(obj: any): obj is PopulationInfoResasResponseDto {
     return (
         typeof obj === 'object' && obj !== null &&
@@ -28,7 +29,7 @@ const isPopulationInfoResasResponseDtoResponseDto = function(obj: any): obj is P
         Array.isArray(obj.result.data) &&
         obj.result.data.every(populationInfo =>
             typeof populationInfo.label === 'string'
-            // TODO: うまういかない。後で考える。
+            // TODO: うまくかない。後で考える。
             // typeof populationInfo.data.year === 'number' &&
             // typeof populationInfo.data.value === 'number'
         )

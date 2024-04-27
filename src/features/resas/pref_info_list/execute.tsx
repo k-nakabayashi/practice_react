@@ -31,4 +31,3 @@ export const getPrefInfoList = async (resas_api_key: string): Promise<PrefInfo[]
   }
   return await executeResas(resas_api_key, callbackFunction, validation);
 }
-

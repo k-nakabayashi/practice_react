@@ -1,5 +1,3 @@
-// TODO: 人口情報取得APIにも対応させる
-
 import { MyError } from '@/utils/error';
 
 export type callbackFunctionType = (data: any) => any;

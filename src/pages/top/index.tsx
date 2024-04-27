@@ -13,7 +13,7 @@ export const TopPage = () => {
 
     const title = 'top';
     const navigate = useNavigate();
-    const { setPrefInfoList } = useContext(PrefInfoListResasContext)
+    const { setPrefInfoList } = useContext(PrefInfoListResasContext);
 
     // ==========================
     // コールバック
