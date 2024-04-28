@@ -5,9 +5,9 @@ import { BaseLayout } from '@/layout/BaseLayout';
 import { resas_api_key_name, PrefInfoListResasContext, getPrefInfoList, PrefInfoListResultDto } from "@/features/resas";
 import { MyError } from '@/utils/error';
 import { ErrorContext } from '@/components/Modal/ErrorModal';
+import { BaseButton } from '@/components/Button';
 
 export const TopPage = () => {
-    console.log("top")
     // ==========================
     // 事前処理
     // ==========================
@@ -25,7 +25,6 @@ export const TopPage = () => {
 
         try {
 
-            console.log("================")
             e.preventDefault();
            
             // 都道府県一覧を取得する
@@ -44,7 +43,6 @@ export const TopPage = () => {
             navigate("/graph");
 
         } catch (error) {
-            console.log("catch!")
             if (!(error instanceof MyError)) {
                 error = new MyError("500", "予期せぬエラー発生")
             }
@@ -53,18 +51,21 @@ export const TopPage = () => {
         }
 
     }
-
+    
     return (
         <BaseLayout
             title={title}
         >
             <div className="container">
-                <form onSubmit={submit}>
-                    <label htmlFor="app_key">
-                        app_key:
-                        <input id="app_key" type="text" required/>
-                    </label>
-                    <button type="submit">送信</button>
+                <form>
+                    <div className='u-ch-mr-2'>
+                        <label htmlFor="app_key">
+                            app_key:
+                            <input id="app_key" type="text" required/>
+                        </label>
+                        <BaseButton callback={submit}></BaseButton>
+                    </div>
+
                 </form>
             </div>
         </BaseLayout>

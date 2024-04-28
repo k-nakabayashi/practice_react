@@ -1,8 +1,7 @@
 import axios from 'axios';
 axios.defaults.headers.common['Accept'] = 'application/json';
-import { PrefInfo, PopulationInfo } from "@/features/resas/common/dto";
+import { PopulationInfo } from "@/features/resas/common/dto";
 
-import { executeResas, callbackFunctionType, validationType } from "@/features/resas/common/utils";
 
 
 // ===================================

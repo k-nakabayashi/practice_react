@@ -60,16 +60,13 @@ export const HighchartsReasComponent = () =>  {
                 valueSuffix: '人'
             },
             series: yAxis_series,
-            // series: [{
-            //     type: 'line',
-            //     data: [1, 2, 3]
-            // }]
         };
     }
 
     const [options, updateOpitions] = useState(genearteOptions([], []));
 
     useEffect(() => {
+        
         updateOpitions(
             genearteOptions(data.target.xAxis_year, data.target.yAxis_series)
         )

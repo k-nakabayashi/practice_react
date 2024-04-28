@@ -10,7 +10,6 @@ import { PrefCheckBoxComponent } from '@/pages/graph/component';
 import { MyError } from '@/utils/error';
 
 export const GraphPage = () => {
-    console.log("GraphPage")
     // ==========================
     // 事前処理
     // ==========================
@@ -30,6 +29,7 @@ export const GraphPage = () => {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     useEffect(() => {
         const fetchData = async () => {
+         
             try {
                 if (prefInfoList.length == 0) {
                     let result_dto: PrefInfoListResultDto = await getPrefInfoList(api_key)
@@ -50,10 +50,10 @@ export const GraphPage = () => {
         <BaseLayout
             title={title}
         >
-            <div className="container">
+            <div className="container u-ch-mt-2">
                 <HighchartsReassProvider>
-                    <HighchartsReasComponent/>
                     <PrefCheckBoxComponent/>
+                    <HighchartsReasComponent/>
                 </HighchartsReassProvider>
             </div>
         </BaseLayout>

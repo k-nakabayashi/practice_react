@@ -1,3 +1,4 @@
+import { BaseButton } from '@/components/Button';
 import { selectError } from '@/utils/error';
 import { createContext, useContext, useState } from 'react';
 
@@ -21,7 +22,6 @@ export const ErrorProvider = ({ children }: ErrorContextProps) => {
   const [status_code, _setStatusCode] = useState("200");
 
   const setStatusCode = (status_code: string) => {
-    console.log(setStatusCode)
     _setStatusCode(status_code)
   }
 
@@ -36,14 +36,18 @@ export const ErrorProvider = ({ children }: ErrorContextProps) => {
   );
 };
 
+export const btn_style = {
+  position: 'absolute', top: '16px', right: '16px',
+}
+
 export const ErrorModal = () => {
-    console.log("error modal")
     const { status_code, hideErrorModal } = useContext(ErrorContext);
   
     if ([null, "", "200"].includes(status_code)) {
       return null;
     }
-    
+
+
     return (
       <div 
         style={{
@@ -62,14 +66,7 @@ export const ErrorModal = () => {
           padding: '20px', 
           borderRadius: '8px',
         }}>
-          <button
-            style={{
-              position: 'absolute', top: '16px', right: '16px',
-              background: "#c6c6c6",
-              color: "black",
-            }}
-            onClick={hideErrorModal}
-          >Close</button>
+          <BaseButton callback={hideErrorModal} style={btn_style} text={"Close"}></BaseButton>
           {selectError(status_code)}
         </div>
       </div>

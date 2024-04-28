@@ -1,12 +1,14 @@
 import { MyError } from '@/utils/error';
-import { useContext, useRef} from 'react';
-import { ErrorContext } from '@/components/Modal/ErrorModal';
+import { useContext, useRef, useState} from 'react';
+import { ErrorContext, btn_style } from '@/components/Modal/ErrorModal';
 import { local_storage } from '@/utils/storage';
 import { resas_api_key_name, PopulationInfoLabel, PopulationInfoData } from "@/features/resas";
 import { PrefInfoListResasContext } from '@/features/resas/pref_info_list';
 import { getPopulationByPrefCode, PopulationInfoResasResponseDto, PopulationInfoResult } from '@/features/resas/population';
 import { HighchartsReassContext, UpdatedPrefInfoDto } from '@/pages/graph/provider';
 import { HighchartsResasPopulation } from '@/features/resas/highcharts';
+import { BaseButton } from '@/components/Button';
+import backgroundImage from '@/assets/image/japan_map.png';
 
 
 
@@ -15,7 +17,6 @@ export const PrefCheckBoxComponent = () => {
     // ==========================
     // 事前処理
     // ==========================
-
     const api_key = local_storage.get(resas_api_key_name);
     const { prefInfoList } = useContext(PrefInfoListResasContext);
     const { data, updateData } = useContext(HighchartsReassContext);
@@ -23,11 +24,19 @@ export const PrefCheckBoxComponent = () => {
     const checkedValues = useRef<string[]>([])
     const { setStatusCode } = useContext(ErrorContext);
 
+    const [ isShow, setShow ] = useState(false);
+    const showModal = () => {
+        setShow(true)
+    }
 
+    const hideModal = () => {
+        setShow(!setShow)
+    }
+    
     // ==========================
     // コールバック
     // ==========================
-   
+    
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
@@ -132,7 +141,7 @@ export const PrefCheckBoxComponent = () => {
                     data: data,
                 })
             }
-
+            
             if (init.current === true) {
                 updateData(
                     data.prefInfoListForChart,
@@ -144,6 +153,7 @@ export const PrefCheckBoxComponent = () => {
                 if (target_pref_code_for_chart.length !== updated_pref_info_list.length) {
                     throw new MyError("500", "予期せぬエラー発生")
                 }
+
                 updateData(
                     target_prefInfoList,
                     updated_pref_info_list,
@@ -152,6 +162,7 @@ export const PrefCheckBoxComponent = () => {
                 init.current = true;
             }
 
+            hideModal()
         } catch (error) {
             if (!(error instanceof MyError)) {
                 error = new MyError("500", "予期せぬエラー発生")
@@ -161,21 +172,92 @@ export const PrefCheckBoxComponent = () => {
     }
 
     return (
-        <form onSubmit={submit}>
-            <button type="submit">送信</button>
-            <div>
-                {prefInfoList.map((prefInfo, _) => (
-                    <label key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}>
-                        <input 
-                            value={prefInfo.prefCode} 
-                            id={"pref_code_" + String(prefInfo.prefCode)} 
-                            type="checkbox" 
-                            name="pref_code"
-                        />
-                        {prefInfo.prefName}
-                    </label>
-                ))}
+        <>
+            <div 
+                style={{
+                    zIndex: 1000, 
+                    position: "fixed", top: '0',  bottom: '0', left: '0', right: '0',
+                    height: "100%" , width: "100%",
+                    display: isShow === true ? "block" : "none",
+                    backgroundColor: 'rgba(128, 128, 128, 0.8)',
+                }}
+            >
+                <div className="container" style={{ 
+                    position: 'absolute', top: '50%', left: '50%', 
+                    transform: 'translate(-50%, -50%)', 
+                    height: "550px",
+                    width: "550px",
+                    
+                    background: 'white', 
+                    padding: '20px', 
+                    borderRadius: '8px',
+                    backgroundImage: `url(${backgroundImage})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat'
+                }}>
+                    <BaseButton callback={hideModal} style={btn_style} text={"Close"}></BaseButton>
+                    <form className='u-ch-mt-2' onSubmit={submit}>
+                        <div style={{textAlign: "left"}}>
+                            <BaseButton callback={submit}></BaseButton>
+                        </div>
+                        <div style={{textAlign: "left"}}>
+                            <p>都道府県一覧</p>
+                            {prefInfoList.map((prefInfo, _) => (
+                                <label 
+                                    style={{
+                                        display: "inline-block",
+                                        height: "16px",
+                                        width: "96px",
+                                        marginTop: "8px",
+                                    }}
+                                    key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}
+                                >
+                                    <input 
+                                        value={prefInfo.prefCode} 
+                                        id={"pref_code_" + String(prefInfo.prefCode)} 
+                                        type="checkbox" 
+                                        name="pref_code"
+                                    />
+                                    {prefInfo.prefName}
+                                </label>
+                            ))}
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+
+            {/* NOTE: このwidthがないとグラフ領域が狭くなく。*/}
+            <p style={{width: "100vw"}}>都道府県ごとの人口推移</p>
+            
+            <div style={{textAlign: "left"}}>
+                <BaseButton callback={showModal} text='都道府県'></BaseButton>
+            </div>
+            {/* <form className='u-ch-mt-2' onSubmit={submit}>
+                <BaseButton callback={submit}></BaseButton>
+                <div style={{textAlign: "left"}}>
+                    <p>都道府県一覧</p>
+                    {prefInfoList.map((prefInfo, _) => (
+                        <label 
+                            style={{
+                                display: "inline-block",
+                                height: "16px",
+                                width: "96px",
+                                marginTop: "8px",
+                            }}
+                            key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}
+                        >
+                            <input 
+                                value={prefInfo.prefCode} 
+                                id={"pref_code_" + String(prefInfo.prefCode)} 
+                                type="checkbox" 
+                                name="pref_code"
+                            />
+                            {prefInfo.prefName}
+                        </label>
+                    ))}
+                </div>
+            </form> */}
+
+        </>
     )
 }
