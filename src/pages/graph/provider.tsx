@@ -9,8 +9,7 @@ type HighchartsReassContextType = {
       target: HighchartsReasComponentDto;
 
     },
-    updateData: (data1: any, data2: any, data3: any) => void;
-    initData: (data1: any, data2: any, data3: any, data4: any) => void;
+    updateData: (data1: any, data2: any, data3: any, data4: any) => void;
 };
 
 const HighchartsReassContext = createContext<HighchartsReassContextType>({
@@ -23,9 +22,7 @@ const HighchartsReassContext = createContext<HighchartsReassContextType>({
       },
     },
     updateData: () => {},
-    initData: () => {},
 });
-
 
 type HighchartsReassProps = {
   children: React.ReactNode
@@ -48,7 +45,7 @@ const HighchartsReassProvider = ({ children }: HighchartsReassProps) => {
       },
     });
 
-    const __updateData = (
+    const updateData = (
       pref_info_list: PrefInfo[],
       updated_pref_info_list: UpdatedPrefInfoDto[],
       xAxis_year: string[], yAxis_series: HighchartsResasPopulation[]  
@@ -72,53 +69,8 @@ const HighchartsReassProvider = ({ children }: HighchartsReassProps) => {
       });
     }
 
-    const updateData = (
-      updated_pref_info_list: UpdatedPrefInfoDto[],
-      xAxis_year: string[], yAxis_series: HighchartsResasPopulation[]
-    ) => {
-      const updatedArray: PrefInfo[] = [...data.prefInfoListForChart];
-
-      for (let i=0; i < Object(updated_pref_info_list).length; ++i) {
-        const pref_info = updated_pref_info_list[i];
-        const pref_index = pref_info.pref_index;
-        updatedArray[pref_index].xAxis_year = pref_info.xAxis_year;
-        updatedArray[pref_index].yAxis_total_population = pref_info.yAxis_total_population;
-      }
-
-      setData({
-        prefInfoListForChart: updatedArray,
-        target: {
-          xAxis_year: xAxis_year,
-          yAxis_series: yAxis_series,
-        }
-      });
-    };
-    
-    const initData = (
-      pref_info_list: PrefInfo[],
-      updated_pref_info_list: UpdatedPrefInfoDto[],
-      xAxis_year: string[], yAxis_series: HighchartsResasPopulation[]  
-    ) => {
-
-      const updatedArray: PrefInfo[] = [...pref_info_list];
-
-      for (let i=0; i < Object(updated_pref_info_list).length; ++i) {
-        const pref_info = updated_pref_info_list[i];
-        const pref_index = pref_info.pref_index;
-        updatedArray[pref_index].xAxis_year = pref_info.xAxis_year;
-        updatedArray[pref_index].yAxis_total_population = pref_info.yAxis_total_population;
-      }
-      setData({
-        prefInfoListForChart: updatedArray,
-        target: {
-          xAxis_year: xAxis_year,
-          yAxis_series: yAxis_series,
-        }
-      });
-    }
-
     return (
-      <HighchartsReassContext.Provider value={{ data, updateData, initData}}>
+      <HighchartsReassContext.Provider value={{ data, updateData}}>
         {children}
       </HighchartsReassContext.Provider>
     );

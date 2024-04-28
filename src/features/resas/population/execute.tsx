@@ -14,8 +14,9 @@ export type PopulationInfoResult = {
 }
 
 export type PopulationInfoResasResponseDto = {
+    status_code: string;
     message: string | null;
-    result: PopulationInfoResult
+    result: PopulationInfoResult | null;
 }
 
 
@@ -36,30 +37,33 @@ const isPopulationInfoResasResponseDtoResponseDto = function(obj: any): obj is P
     );
 }
 
-export const getPopulationByPrefCode = async (resas_api_key: string, pref_code: string) => {
+export const getPopulationByPrefCode = async (resas_api_key: string, pref_code: string): Promise<PopulationInfoResasResponseDto>  => {
+    // https://opendata.resas-portal.go.jp/docs/api/v1/population/sum/estimate.html
+    const url = `https://opendata.resas-portal.go.jp/api/v1/population/sum/estimate?prefCode=${pref_code}`;
 
-    const callbackFunction: callbackFunctionType  = async (resas_api_key: string): Promise<any> => {
-        // https://opendata.resas-portal.go.jp/docs/api/v1/population/sum/estimate.html
-        const url = `https://opendata.resas-portal.go.jp/api/v1/population/sum/estimate?prefCode=${pref_code}`;
-
-        return await axios.get(
-            url, 
-            {
-              headers: {
-                "X-API-KEY": resas_api_key
-              }
+    const res = await axios.get(
+        url, 
+        {
+            headers: {
+            "X-API-KEY": resas_api_key
             }
-        );
-    }
-
-    const validation: validationType = (data: any): boolean => {
-        if (isPopulationInfoResasResponseDtoResponseDto(data)) {
-          return true
         }
-        return false;
-    }
+    );
 
-    return await executeResas(resas_api_key, callbackFunction, validation);
+    const status_code: string = res.data.statusCode;
+
+    if (!isPopulationInfoResasResponseDtoResponseDto(res.data)) {
+        return {
+            status_code: status_code,
+            message: res.data.message,
+            result: null,
+        }
+    }
+    return {
+        status_code: "200",
+        message: res.data.message,
+        result: res.data.result,
+    }
 
 }
 
