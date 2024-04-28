@@ -34,14 +34,15 @@ export type UpdatedPrefInfoDto = {
   yAxis_total_population: number[] | [];
 }
 
+const init_xAxis_year = ['1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025', '2030', '2035', '2040', '2045']
+const init_yAxis_total_population = [
+  {
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    name: ""
+  }
+]
 const HighchartsReassProvider = ({ children }: HighchartsReassProps) => {
-    const init_xAxis_year = ['1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025', '2030', '2035', '2040', '2045']
-    const init_yAxis_total_population = [
-        {
-            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            name: ""
-        }
-    ]
+    
     const [data, setData] = useState({
       prefInfoListForChart: [],
       target: {

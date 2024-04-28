@@ -22,6 +22,7 @@ export const PrefCheckBoxComponent = () => {
     const { data, updateData } = useContext(HighchartsReassContext);
     const init = useRef(false)
     const checkedValues = useRef<string[]>([])
+    const ref_xAxis_year = useRef<string[]>([])
     const { setStatusCode } = useContext(ErrorContext);
 
     const [ isShow, setShow ] = useState(false);
@@ -89,6 +90,7 @@ export const PrefCheckBoxComponent = () => {
 
                 target_pref_code_for_chart.push(Number(pref_code));
                 if (pref_info.hasOwnProperty("xAxis_year") && Object(pref_info.xAxis_year).keys.length >= 0) {
+                    xAxis_year = ref_xAxis_year.current
                     continue;
                 }
                 
@@ -161,6 +163,8 @@ export const PrefCheckBoxComponent = () => {
                 )
                 init.current = true;
             }
+
+            ref_xAxis_year.current = xAxis_year;
 
             hideModal()
         } catch (error) {
