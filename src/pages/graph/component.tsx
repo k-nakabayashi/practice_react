@@ -31,7 +31,6 @@ export const PrefCheckBoxComponent = () => {
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
-            throw new MyError("result_dto.status_code")
             // ==========================
             // 都道府県情報を取得する
             // ==========================
