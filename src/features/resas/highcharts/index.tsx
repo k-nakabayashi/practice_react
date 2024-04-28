@@ -26,12 +26,45 @@ export const HighchartsReasComponent = () =>  {
     ): Highcharts.Options => {
         // https://api.highcharts.com/highcharts/
         return {
-            
+            chart: {
+                type: 'line',
+                width: "800",
+                height: "400"
+            },
             title: {
                 text: '人口の推移'
             },
             subtitle: {
+                text: '2021年版',
+            },
 
+            responsive: {
+                rules: [{
+                  condition: {
+                    maxWidth: 500  // 500px 以下の場合に適用される
+                  },
+                  chartOptions: {
+                    legend: {
+                      layout: 'horizontal',
+                      align: 'center',
+                      verticalAlign: 'bottom',
+                      enabled: false  // 小さい画面では凡例を非表示にする
+                    },
+                    title: {
+                      text: 'Small Screen Chart',
+                      style: {
+                        fontSize: '12px'
+                      }
+                    },
+                    plotOptions: {
+                      series: {
+                        marker: {
+                          radius: 2  // マーカーのサイズを小さくする
+                        }
+                      }
+                    }
+                  }
+                }]
             },
             
             // ==============
@@ -66,18 +99,19 @@ export const HighchartsReasComponent = () =>  {
     const [options, updateOpitions] = useState(genearteOptions([], []));
 
     useEffect(() => {
-        
         updateOpitions(
             genearteOptions(data.target.xAxis_year, data.target.yAxis_series)
         )
     }, [data.target]);
 
     return (
-        <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-            ref={chartComponentRef}
-        />
+        <div>
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+                ref={chartComponentRef}
+            />
+        </div>
     )
 
 };

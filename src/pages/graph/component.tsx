@@ -226,37 +226,11 @@ export const PrefCheckBoxComponent = () => {
                 </div>
             </div>
 
-            {/* NOTE: このwidthがないとグラフ領域が狭くなく。*/}
-            <p style={{width: "100vw"}}>都道府県ごとの人口推移</p>
+          
             
             <div style={{textAlign: "left"}}>
                 <BaseButton callback={showModal} text='都道府県'></BaseButton>
             </div>
-            {/* <form className='u-ch-mt-2' onSubmit={submit}>
-                <BaseButton callback={submit}></BaseButton>
-                <div style={{textAlign: "left"}}>
-                    <p>都道府県一覧</p>
-                    {prefInfoList.map((prefInfo, _) => (
-                        <label 
-                            style={{
-                                display: "inline-block",
-                                height: "16px",
-                                width: "96px",
-                                marginTop: "8px",
-                            }}
-                            key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}
-                        >
-                            <input 
-                                value={prefInfo.prefCode} 
-                                id={"pref_code_" + String(prefInfo.prefCode)} 
-                                type="checkbox" 
-                                name="pref_code"
-                            />
-                            {prefInfo.prefName}
-                        </label>
-                    ))}
-                </div>
-            </form> */}
 
         </>
     )
