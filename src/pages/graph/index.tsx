@@ -16,10 +16,6 @@ export const GraphPage = () => {
     const navigate = useNavigate();
     const api_key = local_storage.get(resas_api_key_name);
     const { prefInfoList, setPrefInfoList } = useContext(PrefInfoListResasContext);
-  
-    // ==========================
-    // Hook
-    // ==========================
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // このページを直接指定した場合、

@@ -128,7 +128,6 @@ export const PrefCheckBoxComponent = () => {
             let yAxis_series: HighchartsResasPopulation[] = []
 
             for (let i=0; i < Object.keys(target_pref_code_for_chart).length; ++i) {
-                const pref_code = target_pref_code_for_chart[i]
                 const pref_index = target_pref_code_for_chart[i] - 1
 
                 const pref_info = target_prefInfoList.filter(prefInfo => prefInfo.prefCode === target_pref_code_for_chart[i])[0];
