@@ -44,17 +44,7 @@ export const PrefCheckBoxComponent = () => {
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
-            // ==========================
-            // 都道府県情報を取得する
-            // ==========================
             
-            // 初期は、data.prefInfoListForChartが設定されいないため注意
-            let target_prefInfoList = []
-            if (init.current === true) {
-                target_prefInfoList = data.prefInfoListForChart;
-            } else {
-                target_prefInfoList = [...prefInfoList];
-            }
             // ==========================
             // 選択した都道府県情報を取得する
             // ==========================
@@ -64,12 +54,29 @@ export const PrefCheckBoxComponent = () => {
                 return checkbox.value;
             });
 
+            if (Object(temp_checkedValues).length === 0) {
+                alert("都道府県を選択してください。");
+                return;
+            }
+
             if (init.current == false) {
                 checkedValues.current = temp_checkedValues
             } else if (JSON.stringify(checkedValues.current) === JSON.stringify(temp_checkedValues)) {
                 return;
             }
             checkedValues.current = temp_checkedValues
+
+            // ==========================
+            // 都道府県情報の一覧を取得する
+            // ==========================
+            
+            // 初期は、data.prefInfoListForChartが設定されいないため注意
+            let target_prefInfoList = []
+            if (init.current === true) {
+                target_prefInfoList = data.prefInfoListForChart;
+            } else {
+                target_prefInfoList = [...prefInfoList];
+            }
 
             // ===============================================
             // 都道府県ごとに、人口情報を設定する
@@ -195,7 +202,7 @@ export const PrefCheckBoxComponent = () => {
                     width: "550px",
                     
                     background: 'white', 
-                    padding: '20px', 
+                    padding: '80px 20px', 
                     borderRadius: '8px',
                     backgroundImage: `url(${backgroundImage})`,
                     backgroundSize: 'contain',

@@ -24,8 +24,9 @@ export const ErrorModal = () => {
           position: 'absolute', top: '50%', left: '50%', 
           transform: 'translate(-50%, -50%)', 
           background: 'white', 
-          padding: '20px', 
+          padding: '80px 20px', 
           borderRadius: '8px',
+          maxWidth: "80vw",
         }}>
           <BaseButton callback={hideErrorModal} style={btn_style}>Close</BaseButton>
           {selectError(status_code)}
