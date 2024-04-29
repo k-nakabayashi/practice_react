@@ -202,10 +202,10 @@ export const PrefCheckBoxComponent = () => {
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat'
                 }}>
-                    <BaseButton callback={hideModal} style={btn_style} text={"Close"}></BaseButton>
+                    <BaseButton callback={hideModal} style={btn_style}>Close</BaseButton>
                     <form className='u-ch-mt-2' onSubmit={submit}>
                         <div style={{textAlign: "left"}}>
-                            <BaseButton callback={submit}></BaseButton>
+                            <BaseButton callback={submit} style={{}}>送信</BaseButton>
                         </div>
                         <div style={{textAlign: "left"}}>
                             <p>都道府県一覧</p>
@@ -236,7 +236,7 @@ export const PrefCheckBoxComponent = () => {
           
             
             <div style={{textAlign: "left"}}>
-                <BaseButton callback={showModal} text='都道府県'></BaseButton>
+                <BaseButton callback={showModal} style={{}}>都道府県</BaseButton>
             </div>
 
         </>

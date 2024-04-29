@@ -27,7 +27,7 @@ export const ErrorModal = () => {
           padding: '20px', 
           borderRadius: '8px',
         }}>
-          <BaseButton callback={hideErrorModal} style={btn_style} text={"Close"}></BaseButton>
+          <BaseButton callback={hideErrorModal} style={btn_style}>Close</BaseButton>
           {selectError(status_code)}
         </div>
       </div>

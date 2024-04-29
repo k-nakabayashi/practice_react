@@ -1,13 +1,13 @@
 
-import { useState } from 'react';
+import { Children, useState } from 'react';
 
 type BaseButtonProps = {
+  children: React.ReactNode;
   callback: (data: any) => void;
   style: object;
-  text: string;
 }
 
-export const BaseButton = ({callback, style={}, text="送信"}: BaseButtonProps) => {
+export const BaseButton = ({children, callback, style={}}: BaseButtonProps) => {
     const [isDisabled, setIsDisabled] = useState(false);
 
     const handleClick = (e) => {
@@ -29,7 +29,7 @@ export const BaseButton = ({callback, style={}, text="送信"}: BaseButtonProps)
     
     return (
         <button className='a-Btn' style={style} onClick={handleClick} disabled={isDisabled}>
-          {text}
+          {children}
         </button>
 
     )

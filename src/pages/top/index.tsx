@@ -63,7 +63,7 @@ export const TopPage = () => {
                             app_key:
                             <input id="app_key" type="text" required/>
                         </label>
-                        <BaseButton callback={submit}></BaseButton>
+                        <BaseButton callback={submit} style={{}}>送信</BaseButton>
                     </div>
 
                 </form>
