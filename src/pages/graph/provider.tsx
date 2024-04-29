@@ -1,7 +1,5 @@
 import { createContext, useState} from 'react';
-import { PrefInfo } from "@/features/resas/common/dto";
-import { HighchartsReasComponentDto, HighchartsResasPopulation } from '@/features/resas/highcharts';
-
+import { PrefInfo, HighchartsReasComponentDto, HighchartsResasPopulation } from '@/features/resas';
 
 type HighchartsReassContextType = {
     data: {
@@ -11,6 +9,7 @@ type HighchartsReassContextType = {
     },
     updateData: (data1: any, data2: any, data3: any, data4: any) => void;
 };
+
 
 const HighchartsReassContext = createContext<HighchartsReassContextType>({
 

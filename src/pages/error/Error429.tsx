@@ -1,5 +1,3 @@
-import { BaseLayout } from '@/layout/BaseLayout';
-
 
 export const Error429 = () => {
   return (

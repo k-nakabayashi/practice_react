@@ -1,5 +1,4 @@
 
-/* */ 
 export const local_storage = {
   get: (key: string) => {
     return JSON.parse(window.localStorage.getItem(key) as string);

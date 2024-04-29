@@ -1,8 +1,8 @@
 import { ErrorBoundary } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter } from 'react-router-dom';
-import { Error500 } from '@/pages/error'
-import { PrefInfoListResasProvider } from '@/features/resas/pref_info_list'
+import { Error500 } from '@/pages'
+import { PrefInfoListResasProvider } from '@/features/resas'
 import { ErrorModal, ErrorProvider } from '@/components/Modal/ErrorModal';
 
 

@@ -1,13 +1,16 @@
 import { MyError } from '@/utils/error';
-import { useContext, useRef, useState} from 'react';
-import { ErrorContext, btn_style } from '@/components/Modal/ErrorModal';
 import { local_storage } from '@/utils/storage';
-import { resas_api_key_name, PopulationInfoLabel, PopulationInfoData } from "@/features/resas";
-import { PrefInfoListResasContext } from '@/features/resas/pref_info_list';
-import { getPopulationByPrefCode, PopulationInfoResasResponseDto, PopulationInfoResult } from '@/features/resas/population';
+import { useContext, useRef, useState} from 'react';
+import { ErrorContext } from '@/components/Modal/ErrorModal';
+import { BaseButton, btn_style } from '@/components/Button';
+
+import { 
+    resas_api_key_name, 
+    PrefInfoListResasContext, 
+    HighchartsResasPopulation,
+    PopulationInfoLabel, PopulationInfoData, getPopulationByPrefCode, PopulationInfoResasResponseDto, 
+} from "@/features/resas";
 import { HighchartsReassContext, UpdatedPrefInfoDto } from '@/pages/graph/provider';
-import { HighchartsResasPopulation } from '@/features/resas/highcharts';
-import { BaseButton } from '@/components/Button';
 import backgroundImage from '@/assets/image/japan_map.png';
 
 

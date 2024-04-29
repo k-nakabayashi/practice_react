@@ -1,23 +1,6 @@
 import { errorRoutingConfig } from "@/routes/error";
 import { Error404} from '@/pages/error';
 
-export enum ErrorStatusCode {
-    _400 = "400",
-    _403 = "403",
-    _404 = "404",
-    _429 = "429",
-    _500 = "500",
-}
-
-export function convertToErrorStatusCode(status_code_str: string): ErrorStatusCode {
-    const status_code = ErrorStatusCode[`_${status_code_str}` as keyof typeof ErrorStatusCode];
-
-    if (status_code === undefined) {
-        return ErrorStatusCode._500;
-    } else {
-        return status_code
-    }
-}
 
 export class MyError extends Error {
     status_code: string;
