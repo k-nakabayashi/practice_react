@@ -1,15 +1,14 @@
 import { createContext, useState} from 'react';
 import { PrefInfo, HighchartsReasComponentDto, HighchartsResasPopulation } from '@/features/resas';
 
+type HighchartsReassData = {
+    prefInfoListForChart: PrefInfo[]
+    target: HighchartsReasComponentDto;
+}
 type HighchartsReassContextType = {
-    data: {
-      prefInfoListForChart: PrefInfo[]
-      target: HighchartsReasComponentDto;
-
-    },
+    data: HighchartsReassData,
     updateData: (data1: any, data2: any, data3: any, data4: any) => void;
 };
-
 
 const HighchartsReassContext = createContext<HighchartsReassContextType>({
 
@@ -34,19 +33,20 @@ export type UpdatedPrefInfoDto = {
 }
 
 const init_xAxis_year = ['1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025', '2030', '2035', '2040', '2045']
-const init_yAxis_total_population = [
-  {
-    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    name: ""
-  }
-]
+// const init_yAxis_total_population = [
+//   {
+//     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+//     name: "",
+//     type: "line",
+//   }
+// ]
 const HighchartsReassProvider = ({ children }: HighchartsReassProps) => {
     
-    const [data, setData] = useState({
+    const [data, setData] = useState<HighchartsReassData>({
       prefInfoListForChart: [],
       target: {
         xAxis_year: init_xAxis_year,
-        yAxis_series: init_yAxis_total_population,
+        yAxis_series: [],
       },
     });
 

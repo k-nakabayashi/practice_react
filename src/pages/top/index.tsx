@@ -12,7 +12,6 @@ export const TopPage = () => {
     // 事前処理
     // ==========================
 
-    const title = 'top';
     const navigate = useNavigate();
     const { setPrefInfoList } = useContext(PrefInfoListResasContext);
     const { setStatusCode } = useContext(ErrorContext);
@@ -21,41 +20,46 @@ export const TopPage = () => {
     // コールバック
     // ==========================
 
-    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 
         try {
 
             e.preventDefault();
            
             // 都道府県一覧を取得する
-            const api_key: any = document.getElementById("app_key").value;
-            const res: PrefInfoListResultDto = await getPrefInfoList(api_key)
+            // const api_key: any = document.getElementById("app_key").value;
+            const input_element = document.getElementById("app_key") as HTMLInputElement | null;
+            
+            if (input_element === null) {
+                throw new MyError("500", "予期せぬエラー発生");
+            }
+
+            const res: PrefInfoListResultDto = await getPrefInfoList(input_element.value)
  
             if (res.status_code != "200") {
                 throw new MyError(res.status_code, "予期せぬエラー発生")
             }
 
             // 必要情報を設定する
-            local_storage.set(resas_api_key_name, api_key)
+            local_storage.set(resas_api_key_name, input_element.value)
             setPrefInfoList(res.result)
 
             // 遷移する
             navigate("/graph");
 
-        } catch (error) {
-            if (!(error instanceof MyError)) {
-                error = new MyError("500", "予期せぬエラー発生")
+        } catch (_error) {
+            if (!(_error instanceof MyError)) {
+                const error = new MyError("500", "予期せぬエラー発生");
+                setStatusCode(error.status_code);
+            } else {
+                setStatusCode(_error.status_code);
             }
-            setStatusCode(error.status_code);
-
         }
 
     }
     
     return (
-        <BaseLayout
-            title={title}
-        >
+        <BaseLayout>
             <div className="container">
                 <form>
                     <div className='u-ch-mr-2'>

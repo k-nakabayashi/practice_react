@@ -15,7 +15,7 @@ export type PrefInfoListResultDto = {
 
 export const getPrefInfoList = async (resas_api_key: string): Promise<PrefInfoListResultDto> => {
 
-  let url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
+  const url = "https://opendata.resas-portal.go.jp/api/v1/prefectures";
   
   const res = await axios.get(
       url, 

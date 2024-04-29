@@ -1,8 +1,7 @@
+import { SeriesLineOptions } from 'highcharts';
 
-export type HighchartsResasPopulation = {
-    name: string;
-    data: number[];
-};
+
+export type HighchartsResasPopulation = SeriesLineOptions;
 
 export type HighchartsReasComponentDto = {
     xAxis_year: string[];
@@ -42,6 +41,8 @@ export const genearteOptions = (
     chart_size: ChartSize,
 ): Highcharts.Options => {
     // https://api.highcharts.com/highcharts/
+
+    
     return {
         chart: {
             type: 'line',

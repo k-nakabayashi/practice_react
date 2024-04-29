@@ -13,7 +13,7 @@ type ErrorContextProps = {
 
 const ErrorContext = createContext<ErrorContextType>({
   status_code: "200",
-  setStatusCode: (data: any) => {},
+  setStatusCode: (data: any) => {data},
   hideModal: () => {},
 });
 

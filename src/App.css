@@ -101,7 +101,8 @@ html {
   margin-right: 32px;
 }
 
-/* .c-Map-Modal {
-  background-image: url(./);
-  background-size: cover;
-} */
+.c-Pref-Modal {
+  background-image: url('/src/assets/image/japan_map.png')!important;
+  background-size: contain!important;
+  background-repeat: no-repeat!important;
+}

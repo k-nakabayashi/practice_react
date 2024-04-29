@@ -27,7 +27,7 @@ const isPopulationInfoResasResponseDtoResponseDto = function(obj: any): obj is P
         (typeof obj.result.boundaryYear === 'number' || typeof obj.result.boundaryYear === 'string') &&
         typeof obj.result.data === 'object' && obj.result.data !== null &&
         Array.isArray(obj.result.data) &&
-        obj.result.data.every(populationInfo =>
+        obj.result.data.every((populationInfo: { label: any; }) =>
             typeof populationInfo.label === 'string'
             // TODO: うまくかない。後で考える。
             // typeof populationInfo.data.year === 'number' &&

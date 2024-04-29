@@ -3,14 +3,14 @@ import { useState } from 'react';
 
 type BaseButtonProps = {
   children: React.ReactNode;
-  callback: (data: any) => void;
+  callback: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   style: object;
 }
 
 export const BaseButton = ({children, callback, style={}}: BaseButtonProps) => {
     const [isDisabled, setIsDisabled] = useState(false);
 
-    const handleClick = (e) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       // ボタンが無効状態であれば何もしない
       if (isDisabled) return;
 

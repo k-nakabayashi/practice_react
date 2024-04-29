@@ -7,7 +7,7 @@ export type PopulationInfoData = {
 
 export type PopulationInfo = {
     label: string;
-    data: PopulationInfoData,
+    data: PopulationInfoData[],
 }
 
 export enum PopulationInfoLabel {

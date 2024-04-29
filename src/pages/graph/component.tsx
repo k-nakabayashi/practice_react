@@ -2,7 +2,7 @@ import { MyError } from '@/utils/error';
 import { local_storage } from '@/utils/storage';
 import { useContext, useRef, useState} from 'react';
 import { ErrorContext } from '@/components/Modal/ErrorModal';
-import { BaseButton, btn_style } from '@/components/Button';
+import { BaseButton } from '@/components/Button';
 import { BaseModalLayout, modal_base_style, modal_base_inner_style } from '@/layout/BaseModalLayout';
 
 import { 
@@ -12,15 +12,10 @@ import {
     PopulationInfoLabel, PopulationInfoData, getPopulationByPrefCode, PopulationInfoResasResponseDto, 
 } from "@/features/resas";
 import { HighchartsReassContext, UpdatedPrefInfoDto } from '@/pages/graph/provider';
-import backgroundImage from '@/assets/image/japan_map.png';
 
 const modal_inner_style = {
     ...modal_base_inner_style,
-    height: "550px",
     width: "550px",
-    backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat'
 }
 
 export const PrefCheckBoxComponent = () => {
@@ -60,7 +55,7 @@ export const PrefCheckBoxComponent = () => {
     // コールバック
     // ==========================
     
-    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const submit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         try {
             e.preventDefault();
             
@@ -68,9 +63,9 @@ export const PrefCheckBoxComponent = () => {
             // 選択した都道府県情報を取得する
             // ==========================
 
-            let checkboxes = document.querySelectorAll('input[name="pref_code"]:checked');
+            const checkboxes = document.querySelectorAll('input[name="pref_code"]:checked');
             let temp_checked_values: string[] = Array.from(checkboxes).map(function(checkbox) {
-                return checkbox.value;
+                return (checkbox as HTMLInputElement).value;
             });
 
             if (Object(temp_checked_values).length === 0) {
@@ -130,7 +125,9 @@ export const PrefCheckBoxComponent = () => {
                 if (res.status_code != "200") {
                     throw new MyError(res.status_code, "予期せぬエラー発生")
                 }
-
+                if (res.result == null) {
+                    throw new MyError("500", "予期せぬエラー発生")
+                }
                 const total_population_list_by_year: PopulationInfoData[] = res.result.data[PopulationInfoLabel.Total].data
 
                 // 以下、人口情報をセットする
@@ -169,6 +166,7 @@ export const PrefCheckBoxComponent = () => {
                 yAxis_series.push({
                     name: pref_info.prefName,
                     data: data,
+                    type: "line",
                 })
             }
             
@@ -195,18 +193,20 @@ export const PrefCheckBoxComponent = () => {
             ref_xAxis_year.current = xAxis_year;
 
             hideModal()
-        } catch (error) {
-            if (!(error instanceof MyError)) {
-                error = new MyError("500", "予期せぬエラー発生")
+        } catch (_error) {
+            if (!(_error instanceof MyError)) {
+                const error = new MyError("500", "予期せぬエラー発生");
+                setStatusCode(error.status_code);
+            } else {
+                setStatusCode(_error.status_code);
             }
-            setStatusCode(error.status_code);
         }
     }
 
     return (
         <>
-            <BaseModalLayout hideModal={hideModal} style={modal_style} inner_style={modal_inner_style} >
-                <form className='u-ch-mt-2' onSubmit={submit}>
+            <BaseModalLayout hideModal={hideModal} style={modal_style} class_name={"c-Pref-Modal"} inner_style={modal_inner_style} >
+                <form className='u-ch-mt-2'>
                     <div style={{textAlign: "left"}}>
                         <BaseButton callback={submit} style={{}}>送信</BaseButton>
                     </div>

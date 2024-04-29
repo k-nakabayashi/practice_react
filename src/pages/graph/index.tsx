@@ -8,11 +8,10 @@ import { HighchartsReassProvider } from '@/pages/graph/provider';
 import { PrefCheckBoxComponent } from '@/pages/graph/component';
 
 export const GraphPage = () => {
+    
     // ==========================
     // 事前処理
     // ==========================
-
-    const title = 'graph';
     const navigate = useNavigate();
     const api_key = local_storage.get(resas_api_key_name);
     const { prefInfoList, setPrefInfoList } = useContext(PrefInfoListResasContext);
@@ -26,7 +25,7 @@ export const GraphPage = () => {
          
             try {
                 if (prefInfoList.length == 0) {
-                    let result_dto: PrefInfoListResultDto = await getPrefInfoList(api_key)
+                    const result_dto: PrefInfoListResultDto = await getPrefInfoList(api_key)
                     if (result_dto.status_code != "200") {
                         throw new MyError("result_dto.status_code")
                     }
@@ -41,9 +40,7 @@ export const GraphPage = () => {
     }, []);
 
     return (
-        <BaseLayout
-            title={title}
-        >
+        <BaseLayout>
             <div className="container u-ch-mt-2">
                 <HighchartsReassProvider>
                     <PrefCheckBoxComponent/>
