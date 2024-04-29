@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest --api_key=sdadsad"
   },
   "dependencies": {
     "add": "^2.0.6",
@@ -19,7 +19,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
-    "react-helmet-async": "^2.0.4",
     "react-overlays": "^5.2.1",
     "react-router-dom": "^6.23.0",
     "yarn": "^1.22.22"

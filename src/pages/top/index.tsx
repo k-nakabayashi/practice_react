@@ -7,10 +7,7 @@ import { MyError } from '@/utils/error';
 import { ErrorContext } from '@/components/Modal/ErrorModal';
 import { BaseButton } from '@/components/Button';
 
-export const TopPage = () => {
-    // ==========================
-    // 事前処理
-    // ==========================
+export const useSubmit = () => {
 
     const navigate = useNavigate();
     const { setPrefInfoList } = useContext(PrefInfoListResasContext);
@@ -57,6 +54,21 @@ export const TopPage = () => {
         }
 
     }
+
+    return submit;
+}
+
+type TopPageProps = {
+    callback: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>| null;
+}
+
+export const TopPage = ({ callback }: TopPageProps) => {
+    const submit = useSubmit()
+    return <Inner callback={submit}/> 
+}
+
+
+const Inner = ( { callback }: TopPageProps ) => {
     
     return (
         <BaseLayout>
@@ -67,7 +79,7 @@ export const TopPage = () => {
                             app_key:
                             <input id="app_key" type="text" required/>
                         </label>
-                        <BaseButton callback={submit} style={{}}>送信</BaseButton>
+                        <BaseButton callback={callback} style={{}}>送信</BaseButton>
                     </div>
 
                 </form>
