@@ -3,6 +3,7 @@ import { local_storage } from '@/utils/storage';
 import { useContext, useRef, useState} from 'react';
 import { ErrorContext } from '@/components/Modal/ErrorModal';
 import { BaseButton, btn_style } from '@/components/Button';
+import { BaseModalLayout, modal_base_style, modal_base_inner_style } from '@/layout/BaseModalLayout';
 
 import { 
     resas_api_key_name, 
@@ -13,19 +14,32 @@ import {
 import { HighchartsReassContext, UpdatedPrefInfoDto } from '@/pages/graph/provider';
 import backgroundImage from '@/assets/image/japan_map.png';
 
-
+const modal_inner_style = {
+    ...modal_base_inner_style,
+    height: "550px",
+    width: "550px",
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat'
+}
 
 export const PrefCheckBoxComponent = () => {
-
+    
     // ==========================
     // 事前処理
     // ==========================
+    // 人口情報取得の初回かどうかの判定フラグ
+    const init = useRef(false)
+
     const api_key = local_storage.get(resas_api_key_name);
     const { prefInfoList } = useContext(PrefInfoListResasContext);
     const { data, updateData } = useContext(HighchartsReassContext);
-    const init = useRef(false)
-    const checkedValues = useRef<string[]>([])
+    const checked_values = useRef<string[]>([])
     const ref_xAxis_year = useRef<string[]>([])
+
+    // ~~~~~~~~~~~
+    // エラー関連
+    // ~~~~~~~~~~~
     const { setStatusCode } = useContext(ErrorContext);
 
     const [ isShow, setShow ] = useState(false);
@@ -35,6 +49,11 @@ export const PrefCheckBoxComponent = () => {
 
     const hideModal = () => {
         setShow(!setShow)
+    }
+    
+    const modal_style = {
+        ...modal_base_style,
+        display: isShow === true ? "block" : "none",
     }
     
     // ==========================
@@ -50,21 +69,21 @@ export const PrefCheckBoxComponent = () => {
             // ==========================
 
             let checkboxes = document.querySelectorAll('input[name="pref_code"]:checked');
-            let temp_checkedValues: string[] = Array.from(checkboxes).map(function(checkbox) {
+            let temp_checked_values: string[] = Array.from(checkboxes).map(function(checkbox) {
                 return checkbox.value;
             });
 
-            if (Object(temp_checkedValues).length === 0) {
+            if (Object(temp_checked_values).length === 0) {
                 alert("都道府県を選択してください。");
                 return;
             }
 
             if (init.current == false) {
-                checkedValues.current = temp_checkedValues
-            } else if (JSON.stringify(checkedValues.current) === JSON.stringify(temp_checkedValues)) {
+                checked_values.current = temp_checked_values
+            } else if (JSON.stringify(checked_values.current) === JSON.stringify(temp_checked_values)) {
                 return;
             }
-            checkedValues.current = temp_checkedValues
+            checked_values.current = temp_checked_values
 
             // ==========================
             // 都道府県情報の一覧を取得する
@@ -87,13 +106,13 @@ export const PrefCheckBoxComponent = () => {
             let updated_pref_info_list: UpdatedPrefInfoDto[] = [];
 
             // 選択されている都道府県ごとに、人口情報を取得する
-            for (let i=0; i < Object.keys(checkedValues.current).length; ++i) {
+            for (let i=0; i < Object.keys(checked_values.current).length; ++i) {
 
                 // ~~~~~~~~~~~~~~
                 // 事前処理をする
                 // ~~~~~~~~~~~~~~
 
-                const pref_code: string = checkedValues.current[i];
+                const pref_code: string = checked_values.current[i];
                 const pref_index = Number(pref_code) - 1
         
                 let pref_info = target_prefInfoList[pref_index];
@@ -186,61 +205,36 @@ export const PrefCheckBoxComponent = () => {
 
     return (
         <>
-            <div 
-                style={{
-                    zIndex: 1000, 
-                    position: "fixed", top: '0',  bottom: '0', left: '0', right: '0',
-                    height: "100%" , width: "100%",
-                    display: isShow === true ? "block" : "none",
-                    backgroundColor: 'rgba(128, 128, 128, 0.8)',
-                }}
-            >
-                <div className="container" style={{ 
-                    position: 'absolute', top: '50%', left: '50%', 
-                    transform: 'translate(-50%, -50%)', 
-                    height: "550px",
-                    width: "550px",
-                    
-                    background: 'white', 
-                    padding: '80px 20px', 
-                    borderRadius: '8px',
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat'
-                }}>
-                    <BaseButton callback={hideModal} style={btn_style}>Close</BaseButton>
-                    <form className='u-ch-mt-2' onSubmit={submit}>
-                        <div style={{textAlign: "left"}}>
-                            <BaseButton callback={submit} style={{}}>送信</BaseButton>
-                        </div>
-                        <div style={{textAlign: "left"}}>
-                            <p>都道府県一覧</p>
-                            {prefInfoList.map((prefInfo, _) => (
-                                <label 
-                                    style={{
-                                        display: "inline-block",
-                                        height: "16px",
-                                        width: "96px",
-                                        marginTop: "8px",
-                                    }}
-                                    key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}
-                                >
-                                    <input 
-                                        value={prefInfo.prefCode} 
-                                        id={"pref_code_" + String(prefInfo.prefCode)} 
-                                        type="checkbox" 
-                                        name="pref_code"
-                                    />
-                                    {prefInfo.prefName}
-                                </label>
-                            ))}
-                        </div>
-                    </form>
-                </div>
-            </div>
-
+            <BaseModalLayout hideModal={hideModal} style={modal_style} inner_style={modal_inner_style} >
+                <form className='u-ch-mt-2' onSubmit={submit}>
+                    <div style={{textAlign: "left"}}>
+                        <BaseButton callback={submit} style={{}}>送信</BaseButton>
+                    </div>
+                    <div style={{textAlign: "left"}}>
+                        <p>都道府県一覧</p>
+                        {prefInfoList.map((prefInfo, _) => (
+                            <label 
+                                style={{
+                                    display: "inline-block",
+                                    height: "16px",
+                                    width: "96px",
+                                    marginTop: "8px",
+                                }}
+                                key={String(prefInfo.prefCode)} htmlFor={"pref_code_" + String(prefInfo.prefCode)}
+                            >
+                                <input 
+                                    value={prefInfo.prefCode} 
+                                    id={"pref_code_" + String(prefInfo.prefCode)} 
+                                    type="checkbox" 
+                                    name="pref_code"
+                                />
+                                {prefInfo.prefName}
+                            </label>
+                        ))}
+                    </div>
+                </form>
+            </BaseModalLayout>
           
-            
             <div style={{textAlign: "left"}}>
                 <BaseButton callback={showModal} style={{}}>都道府県</BaseButton>
             </div>

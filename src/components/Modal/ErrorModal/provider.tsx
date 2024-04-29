@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 type ErrorContextType = {
   status_code: string;
   setStatusCode: (data: any) => void;
-  hideErrorModal: () => void;
+  hideModal: () => void;
 };
 
 
@@ -14,7 +14,7 @@ type ErrorContextProps = {
 const ErrorContext = createContext<ErrorContextType>({
   status_code: "200",
   setStatusCode: (data: any) => {},
-  hideErrorModal: () => {},
+  hideModal: () => {},
 });
 
 
@@ -25,12 +25,12 @@ const ErrorProvider = ({ children }: ErrorContextProps) => {
     _setStatusCode(status_code)
   }
 
-  const hideErrorModal = () => {
+  const hideModal = () => {
     _setStatusCode("200")
   }
 
   return (
-    <ErrorContext.Provider value={{ status_code, setStatusCode, hideErrorModal }}>
+    <ErrorContext.Provider value={{ status_code, setStatusCode, hideModal }}>
       {children}
     </ErrorContext.Provider>
   );
